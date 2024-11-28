@@ -5,211 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Return Items</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #a1eac1; /* Apple green background */
-            color: #fff; /* White text color */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .dashboard-container {
-            background-color: #333; /* Dark grey background for the container */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 1200px;
-            text-align: center;
-            position: relative;
-        }
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .header-container img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        .title-container {
-            flex-grow: 1;
-            text-align: center;
-        }
-        .dashboard-container h1 {
-            margin-bottom: 5px;
-            font-size: 18px;
-            color: #fff;
-        }
-        .dashboard-container h2 {
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #ddd;
-        }
-        .content-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .form-container {
-            width: 45%;
-            text-align: left;
-        }
-        .form-container .input-group {
-            position: relative;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-        }
-        .form-container input, .form-container select {
-            width: 100%;
-            padding: 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            color: #000; /* Black text color for inputs */
-        }
-        .form-container button {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #45a049;
-        }
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-        }
-        .action-buttons button {
-            width: 32%;
-            padding: 8px;
-            background-color: #45a049;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .action-buttons button:hover {
-            background-color: #45a049;
-        }
-        .action-buttons .delete {
-            background-color: #45a049;
-        }
-        .action-buttons .delete:hover {
-            background-color: #45a049;
-        }
-        .action-buttons .cancel {
-            background-color: #45a049;
-        }
-        .action-buttons .cancel:hover {
-            background-color: #45a049;
-        }
-        .barrier {
-            width: 2px;
-            background-color: #ddd;
-            margin: 0 20px;}
-            
-        .table-container {
-            width: 50%;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #fff; /* White text color for table */
-        }
-        table, th, td {
-            border: 1px solid #ddd; /* Add border to table, table headers, and table cells */
-        }
-        th, td {
-            padding: 6px;
-            text-align: left;
-        }
-        th {
-            background-color: #444; /* Dark grey background for table headers */
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;   
-        }
-        .button-container button {
-            padding: 6px 30px;
-            font-size: 12px;
-            color: white;
-            background-color: #008CBA;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .button-container button img {
-            height: 20px;
-            margin-right: 8px;
-        }
-        .button-container button:hover {
-            background-color: #007bb5;
-        }
-        .search-container {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: flex-end;
-        }
-        .search-container input {
-            width: 50%;
-            padding: 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            color: #000; /* Black text color for inputs */
-        }
-        .horizontal-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
-        }
-        .horizontal-group label {
-            display: flex;
-            align-items: center;
-            margin-right: 8px;
-        }
-        .horizontal-group input {
-            margin-right: 5px;
-        }
-        .return-log-button {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-        .return-log-button img {
-            height: 20px;
-            margin-right: 8px;
-        }
-        .return-log-button:hover {
-            background-color: #2980b9;
-        }
-    </style>
+    <link rel="stylesheet" href="return.css">
+    <link rel="icon" type="image/png" href="is.jpg">
 </head>
 <body>
     <div class="dashboard-container">
@@ -234,12 +31,13 @@
                     </div>
                     <input type="text" id="itemName" placeholder="Item Name" required>
                     <input type="number" id="quantity" placeholder="Quantity" required>
+                    <input type="date" id="dateNeeded" placeholder="Date Requested" required>
                 </form>
                 <h2>Borrower Details</h2>
                 <form id="borrowerForm">
                     <input type="text" id="borrowerName" placeholder="Name" required>
                     <input type="text" id="idNumber" placeholder="ID Number" required>
-                    <input type="text" id="yearSection" placeholder="Course/Yr/Section" required>
+                    <input type="text" id="courseYearSection" placeholder="Course/Yr/Section" required>
                     <h2>Returned Date</h2>
                     <input type="date" id="dateReturned" placeholder="Date Returned" required>
                     <h2>Completion</h2>
@@ -252,33 +50,34 @@
                         <label><input type="checkbox" id="conditionGood" value="Good"> Good</label>
                         <label><input type="checkbox" id="conditionDamaged" value="Damaged"> Damaged</label>
                     </div>
-                    <button type="submit">Save</button>
+                    <button type="submit">Update</button>
                 </form>
                 <div class="action-buttons">
-                    <button class="edit" onclick="editItem()">Edit</button>
-                    <button class="delete" onclick="deleteItem()">Delete</button>
                     <button class="cancel" onclick="cancelEdit()">Cancel</button>
                 </div>
             </div>
             <div class="barrier"></div>
             <div class="table-container">
                 <div class="search-container">
+                    <button class="refresh-button" onclick="refreshPage()">
+                        <img src="refresh.png" alt="Refresh">
+                    </button>
                     <input type="text" id="searchInput" placeholder="Search Request No." onkeyup="searchTable()">
                 </div>
                 <table id="itemsTable">
                     <thead>
                         <tr>
-                            <th>Request No.</th>
+                            <th>Request No</th>
                             <th>Item Name</th>
                             <th>Quantity</th>
-                            <th>Returned Date</th>
+                            <th>Date Requested</th>
                             <th>Borrower Name</th>
                             <th>ID Number</th>
                             <th>Course/Yr/Section</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Table rows will be added here -->
+                        <!-- Rows will be added here dynamically -->
                     </tbody>
                 </table>
             </div>
@@ -290,86 +89,186 @@
     <script>
         let editIndex = -1;
 
-        document.getElementById('borrowerForm').addEventListener('submit', function(event) {
+        document.getElementById('borrowerForm').addEventListener('submit', async function(event) {
             event.preventDefault();
-            
             const requestNo = document.getElementById('requestNo').value;
             const itemName = document.getElementById('itemName').value;
             const quantity = document.getElementById('quantity').value;
+            const dateRequested = document.getElementById('dateNeeded').value;
             const borrowerName = document.getElementById('borrowerName').value;
             const idNumber = document.getElementById('idNumber').value;
-            const yearSection = document.getElementById('yearSection').value;
+            const yearSection = document.getElementById('courseYearSection').value;
             const dateReturned = document.getElementById('dateReturned').value;
             const completion = document.getElementById('completionComplete').checked ? 'Complete' : 'Incomplete';
             const condition = document.getElementById('conditionGood').checked ? 'Good' : 'Damaged';
-            
-            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
-            
+
+            const formattedDateRequested = formatDate(dateRequested);
+            const formattedDateReturned = formatDate(dateReturned);
+
+            if (formattedDateRequested === 'Invalid Date' || formattedDateReturned === 'Invalid Date') {
+                console.error('Invalid date format');
+                alert('Invalid date format. Please check your input.');
+                return;
+            }
+
             const newRow = {
                 requestNo,
                 itemName,
                 quantity,
-                dateReturned,
+                dateRequested: formattedDateRequested,
                 borrowerName,
                 idNumber,
-                yearSection,
+                courseYearSection: yearSection,
+                dateReturned: formattedDateReturned,
                 completion,
                 condition
             };
 
-            let rows = JSON.parse(localStorage.getItem('returnItems')) || [];
-            if (editIndex === -1) {
-                rows.push(newRow);
-            } else {
-                rows[editIndex] = newRow;
-                editIndex = -1;
+            console.log('Sending return data to server:', newRow); // Debug log
+
+            try {
+                const response = await fetch('/return-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newRow)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    console.log('Return data sent to server successfully'); // Correct console log message
+                    updateReturnLogTable(result.data);
+                    deleteRequestRow(requestNo);
+                    document.getElementById('itemForm').reset();
+                    document.getElementById('borrowerForm').reset();
+                    editIndex = -1;
+                } else {
+                    console.error('Failed to send return data to server');
+                    alert('Failed to send return data to server. Please try again later.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while sending return data to the server. Please try again later.');
             }
-            localStorage.setItem('returnItems', JSON.stringify(rows));
-            loadTable();
-            document.getElementById('itemForm').reset();
-            document.getElementById('borrowerForm').reset();
         });
 
-        function loadTable() {
+        function deleteRequestRow(requestNo) {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            for (let i = 0; i < table.rows.length; i++) {
+                if (table.rows[i].cells[0].textContent === requestNo) {
+                    table.deleteRow(i);
+                    break;
+                }
+            }
+        }
+
+        function updateReturnLogTable(newRow) {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const newRowElement = table.insertRow();
+            newRowElement.insertCell(0).textContent = newRow.requestNo;
+            newRowElement.insertCell(1).textContent = newRow.itemName;
+            newRowElement.insertCell(2).textContent = newRow.quantity;
+            newRowElement.insertCell(3).textContent = formatDate(newRow.dateRequested);
+            newRowElement.insertCell(4).textContent = newRow.borrowerName;
+            newRowElement.insertCell(5).textContent = newRow.idNumber;
+            newRowElement.insertCell(6).textContent = newRow.courseYearSection;
+            newRowElement.insertCell(7).textContent = formatDate(newRow.dateReturned);
+            newRowElement.insertCell(8).textContent = newRow.completion;
+            newRowElement.insertCell(9).textContent = newRow.condition;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return 'Invalid Date';
+            return date.toISOString().split('T')[0];
+        }
+
+        function formatDateForInput(dateString) {
+            const [year, month, day] = dateString.split('-');
+            return `${year}-${month}-${day}`;
+        }
+
+        async function loadTable() {
             const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
             table.innerHTML = '';
-            const rows = JSON.parse(localStorage.getItem('returnItems')) || [];
-            rows.forEach((row, index) => {
-                const newRow = table.insertRow();
-                newRow.insertCell(0).textContent = row.requestNo;
-                newRow.insertCell(1).textContent = row.itemName;
-                newRow.insertCell(2).textContent = row.quantity;
-                newRow.insertCell(3).textContent = row.dateReturned;
-                newRow.insertCell(4).textContent = row.borrowerName;
-                newRow.insertCell(5).textContent = row.idNumber;
-                newRow.insertCell(6).textContent = row.yearSection;
-                newRow.onclick = () => editItem(index);
-            });
+            try {
+                const response = await fetch('/requests');
+                const result = await response.json();
+                if (result.success) {
+                    const rows = result.data;
+                    rows.forEach((row, index) => {
+                        const newRow = table.insertRow();
+                        newRow.insertCell(0).textContent = row.requestNo;
+                        newRow.insertCell(1).textContent = row.itemName;
+                        newRow.insertCell(2).textContent = row.quantity;
+                        newRow.insertCell(3).textContent = formatDate(row.dateNeeded);
+                        newRow.insertCell(4).textContent = row.borrowerName;
+                        newRow.insertCell(5).textContent = row.idNumber;
+                        newRow.insertCell(6).textContent = row.courseYearSection;
+                        newRow.onclick = () => editItem(index);
+                    });
+                } else {
+                    console.error('Failed to fetch request data from server');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
 
         function editItem(index) {
-            const rows = JSON.parse(localStorage.getItem('returnItems')) || [];
-            const row = rows[index];
-            document.getElementById('requestNo').value = row.requestNo;
-            document.getElementById('itemName').value = row.itemName;
-            document.getElementById('quantity').value = row.quantity;
-            document.getElementById('dateReturned').value = row.dateReturned;
-            document.getElementById('borrowerName').value = row.borrowerName;
-            document.getElementById('idNumber').value = row.idNumber;
-            document.getElementById('yearSection').value = row.yearSection;
-            document.getElementById('completionComplete').checked = row.completion === 'Complete';
-            document.getElementById('completionIncomplete').checked = row.completion === 'Incomplete';
-            document.getElementById('conditionGood').checked = row.condition === 'Good';
-            document.getElementById('conditionDamaged').checked = row.condition === 'Damaged';
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const row = table.rows[index];
+            document.getElementById('requestNo').value = row.cells[0].textContent;
+            document.getElementById('itemName').value = row.cells[1].textContent;
+            document.getElementById('quantity').value = row.cells[2].textContent;
+            document.getElementById('dateNeeded').value = formatDateForInput(row.cells[3].textContent);
+            document.getElementById('borrowerName').value = row.cells[4].textContent;
+            document.getElementById('idNumber').value = row.cells[5].textContent;
+            document.getElementById('courseYearSection').value = row.cells[6].textContent;
+            document.getElementById('dateReturned').value = row.cells[7] ? formatDateForInput(row.cells[7].textContent) : '';
+            document.getElementById('completionComplete').checked = row.cells[8] && row.cells[8].textContent === 'Complete';
+            document.getElementById('completionIncomplete').checked = row.cells[8] && row.cells[8].textContent === 'Incomplete';
+            document.getElementById('conditionGood').checked = row.cells[9] && row.cells[9].textContent === 'Good';
+            document.getElementById('conditionDamaged').checked = row.cells[9] && row.cells[9].textContent === 'Damaged';
             editIndex = index;
+        }
+
+        function refreshPage() {
+            document.getElementById('itemForm').reset();
+            document.getElementById('borrowerForm').reset();
+            loadTable();
+        }
+
+        function updateAddTable(newRow, index = -1) {
+            const addTable = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            if (index === -1) {
+                const newRowElement = addTable.insertRow();
+                newRowElement.insertCell(0).textContent = newRow.requestNo;
+                newRowElement.insertCell(1).textContent = newRow.itemName;
+                newRowElement.insertCell(2).textContent = newRow.quantity;
+                newRowElement.insertCell(3).textContent = newRow.dateNeeded;
+                newRowElement.insertCell(4).textContent = newRow.borrowerName;
+                newRowElement.insertCell(5).textContent = newRow.idNumber;
+                newRowElement.insertCell(6).textContent = newRow.courseYearSection;
+                newRowElement.onclick = () => editItem(newRowElement.rowIndex - 1);
+            } else {
+                const row = addTable.rows[index];
+                row.cells[0].textContent = newRow.requestNo;
+                row.cells[1].textContent = newRow.itemName;
+                row.cells[2].textContent = newRow.quantity;
+                row.cells[3].textContent = newRow.dateNeeded;
+                row.cells[4].textContent = newRow.borrowerName;
+                row.cells[5].textContent = newRow.idNumber;
+                row.cells[6].textContent = newRow.courseYearSection;
+            }
         }
 
         function deleteItem() {
             if (editIndex !== -1) {
-                let rows = JSON.parse(localStorage.getItem('returnItems')) || [];
-                rows.splice(editIndex, 1);
-                localStorage.setItem('returnItems', JSON.stringify(rows));
-                loadTable();
+                const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+                table.deleteRow(editIndex);
                 editIndex = -1;
                 document.getElementById('itemForm').reset();
                 document.getElementById('borrowerForm').reset();

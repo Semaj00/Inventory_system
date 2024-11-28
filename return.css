@@ -1,0 +1,230 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #a1eac1; /* Apple green background */
+    color: #fff; /* White text color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+.dashboard-container {
+    background-color: #333; /* Dark grey background for the container */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    position: relative;
+}
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.header-container img {
+    height: 40px;
+    margin-right: 10px;
+}
+.title-container {
+    flex-grow: 1;
+    text-align: center;
+}
+.dashboard-container h1 {
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #fff;
+}
+.dashboard-container h2 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ddd;
+}
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.form-container {
+    width: 45%;
+    text-align: left;
+}
+.form-container .input-group {
+    position: relative;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+.form-container input, .form-container select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #000; /* Black text color for inputs */
+}
+.form-container button {
+    width: auto; /* Change width to auto for medium button */
+    padding: 10px 20px; /* Adjust padding for medium button */
+    margin-top: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block; /* Make the button a block element */
+    margin-left: auto; /* Center the button */
+    margin-right: auto; /* Center the button */
+    font-size: 16px; /* Increase font size for medium button */
+}
+.form-container button:hover {
+    background-color: #45a049;
+}
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Center the cancel button */
+    margin-top: 8px;
+}
+.action-buttons button {
+    width: auto; /* Change width to auto for medium button */
+    padding: 10px 20px; /* Adjust padding for medium button */
+    background-color: #45a049;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; /* Increase font size for medium button */
+}
+.action-buttons button:hover {
+    background-color: #45a049;
+}
+.action-buttons .delete {
+    background-color: #45a049;
+}
+.action-buttons .delete:hover {
+    background-color: #45a049;
+}
+.action-buttons .cancel {
+    background-color: #45a049;
+}
+.action-buttons .cancel:hover {
+    background-color: #45a049;
+}
+.barrier {
+    width: 2px;
+    background-color: #ddd;
+    margin: 0 20px;
+}
+.table-container {
+    width: 50%;
+    margin-top: 20px;
+    overflow-x: auto; /* Add horizontal overflow */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff; /* White text color for table */
+}
+table, th, td {
+    border: 1px solid #ddd; /* Add border to table, table headers, and table cells */
+}
+th, td {
+    padding: 6px;
+    text-align: left;
+}
+th {
+    background-color: #444; /* Dark grey background for table headers */
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.button-container button {
+    padding: 6px 30px;
+    font-size: 12px;
+    color: white;
+    background-color: #45a049;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.button-container button img {
+    height: 20px;
+    margin-right: 8px;
+}
+.button-container button:hover {
+    background-color: #45a049;
+}
+.search-container {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; /* Ensure items are centered vertically */
+}
+.search-container input {
+    width: 50%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #000; /* Black text color for inputs */
+}
+.horizontal-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+.horizontal-group label {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+.horizontal-group input {
+    margin-right: 5px;
+}
+.return-log-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #45a049;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+.return-log-button img {
+    height: 20px;
+    margin-right: 8px;
+}
+.return-log-button:hover {
+    background-color: #45a049;
+}
+.refresh-button {
+    padding: 6px 12px;
+    font-size: 12px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+.refresh-button img {
+    height: 20px;
+    margin-right: 8px;
+}
+.refresh-button:hover {
+    background-color: #45a049;
+}

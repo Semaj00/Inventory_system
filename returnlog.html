@@ -5,107 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Return Log</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="returnlog.css"> <!-- Link to external CSS file -->
+    <link rel="icon" type="image/png" href="is.jpg">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #a1eac1; /* Apple green background */
-            color: #fff; /* White text color */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); /* Import aesthetic font */
+
+        .print-button-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
+            margin-top: 10px; /* Add some space above the button */
         }
-        .dashboard-container {
-            background-color: #333; /* Dark grey background for the container */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 1200px;
-            text-align: center;
-            position: relative;
+        .print-button-container img {
+            width: 20px; /* Set the width of the icon */
+            height: 20px; /* Set the height of the icon */
+            margin-right: 5px; /* Add some space between the icon and text */
         }
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .header-container img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        .title-container {
-            flex-grow: 1;
-            text-align: center;
-        }
-        .dashboard-container h1 {
-            margin-bottom: 5px;
-            font-size: 18px;
-            color: #fff;
-        }
-        .dashboard-container h2 {
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #ddd;
-        }
-        .table-container {
-            width: 100%;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #fff; /* White text color for table */
-        }
-        table, th, td {
-            border: 1px solid #ddd; /* Add border to table, table headers, and table cells */
-        }
-        th, td {
-            padding: 6px;
-            text-align: left;
-        }
-        th {
-            background-color: #444; /* Dark grey background for table headers */
-        }
-        .search-container {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: flex-end;
-        }
-        .search-container input {
-            width: 50%;
-            padding: 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            color: #000; /* Black text color for inputs */
-        }
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
-        .button-container button {
-            padding: 8px 15px;
-            font-size: 14px;
-            color: white;
-            background-color: #008CBA;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-        .button-container button img {
-            height: 20px;
-            margin-right: 8px;
-        }
-        .button-container button:hover {
-            background-color: #007bb5;
+        .print-button-container button {
+            font-family: 'serif', cursive; /* Apply aesthetic font */
         }
     </style>
 </head>
@@ -120,6 +36,9 @@
         <h2>INVENTORY SYSTEM</h2>
         <div class="table-container">
             <div class="search-container">
+                <button onclick="loadTable()">
+                    <img src="refresh.png" alt="Refresh">
+                </button>
                 <input type="text" id="searchInput" placeholder="Search Request No." onkeyup="searchTable()">
             </div>
             <table id="itemsTable">
@@ -128,10 +47,11 @@
                         <th>Request No.</th>
                         <th>Item Name</th>
                         <th>Quantity</th>
-                        <th>Returned Date</th>
+                        <th>Request Date</th>
                         <th>Borrower Name</th>
                         <th>ID Number</th>
                         <th>Course/Yr/Section</th>
+                        <th>Returned Date</th> <!-- Moved column -->
                         <th>Completion</th>
                         <th>Condition</th>
                     </tr>
@@ -144,6 +64,11 @@
         <div class="button-container">
             <button onclick="window.location.href='return.html'">
                 <img src="returnlog.png" alt="Return Form">Return Form
+            </button>
+        </div>
+        <div class="print-button-container">
+            <button onclick="printTable()">
+                <img src="print.png" alt="Print">Print Table
             </button>
         </div>
     </div>
@@ -167,22 +92,66 @@
             }
         }
 
-        function loadTable() {
+        async function loadTable() {
             const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
             table.innerHTML = '';
-            const rows = JSON.parse(localStorage.getItem('returnItems')) || [];
-            rows.forEach(row => {
-                const newRow = table.insertRow();
-                newRow.insertCell(0).textContent = row.requestNo;
-                newRow.insertCell(1).textContent = row.itemName;
-                newRow.insertCell(2).textContent = row.quantity;
-                newRow.insertCell(3).textContent = row.dateReturned;
-                newRow.insertCell(4).textContent = row.borrowerName;
-                newRow.insertCell(5).textContent = row.idNumber;
-                newRow.insertCell(6).textContent = row.yearSection;
-                newRow.insertCell(7).textContent = row.completion;
-                newRow.insertCell(8).textContent = row.condition;
-            });
+            try {
+                const response = await fetch('/returns');
+                const result = await response.json();
+                if (result.success) {
+                    const rows = result.data;
+                    rows.forEach(row => {
+                        const newRow = table.insertRow();
+                        newRow.insertCell(0).textContent = row.requestNo;
+                        newRow.insertCell(1).textContent = row.itemName;
+                        newRow.insertCell(2).textContent = row.quantity;
+                        newRow.insertCell(3).textContent = formatDate(row.dateRequested);
+                        newRow.insertCell(4).textContent = row.borrowerName;
+                        newRow.insertCell(5).textContent = row.idNumber;
+                        newRow.insertCell(6).textContent = row.courseYearSection;
+                        newRow.insertCell(7).textContent = formatDate(row.dateReturned);
+                        newRow.insertCell(8).textContent = row.completion;
+                        newRow.insertCell(9).textContent = row.condition;
+                    });
+                } else {
+                    console.error('Failed to fetch return data from server');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function updateReturnLogTable(newRow) {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const newRowElement = table.insertRow();
+            newRowElement.insertCell(0).textContent = newRow.requestNo;
+            newRowElement.insertCell(1).textContent = newRow.itemName;
+            newRowElement.insertCell(2).textContent = newRow.quantity;
+            newRowElement.insertCell(3).textContent = formatDate(newRow.dateNeeded);
+            newRowElement.insertCell(4).textContent = newRow.borrowerName;
+            newRowElement.insertCell(5).textContent = newRow.idNumber;
+            newRowElement.insertCell(6).textContent = newRow.courseYearSection;
+            newRowElement.insertCell(7).textContent = formatDate(newRow.dateReturned);
+            newRowElement.insertCell(8).textContent = newRow.completion;
+            newRowElement.insertCell(9).textContent = newRow.condition;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return 'Invalid Date';
+            return date.toISOString().split('T')[0];
+        }
+
+        function printTable() {
+            const tableContents = document.querySelector('#itemsTable').outerHTML;
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(tableContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
         }
 
         window.onload = loadTable;

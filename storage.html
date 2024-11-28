@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/png" href="is.jpg">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -101,14 +103,14 @@
         .action-buttons button {
             width: 32%;
             padding: 8px;
-            background-color: #008CBA;
+            background-color: #45a049;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         .action-buttons button:hover {
-            background-color: #007bb5;
+            background-color: #45a049;
         }
         .action-buttons .delete {
             background-color: #e74c3c;
@@ -129,7 +131,7 @@
         }
         .table-container {
             width: 45%;
-            margin-top: 1px;
+            margin-top: -25px;
             overflow-x: auto; /* Allow horizontal scrolling if needed */
         }
         table {
@@ -156,7 +158,7 @@
             padding: 6px 12px;
             font-size: 12px;
             color: white;
-            background-color: #008CBA;
+            background-color: #45a049;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -169,15 +171,15 @@
             margin-right: 8px;
         }
         .button-container button:hover {
-            background-color: #007bb5;
+            background-color: #45a049;
         }
         .search-container {
-            margin-bottom: 10px;
+            margin-top: -2px;
             display: flex;
             justify-content: flex-end;
         }
         .search-container input {
-            width: 50%;
+            width: 40%;
             padding: 6px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -201,7 +203,7 @@
         <div class="content-container">
             <div class="form-container">
                 <h2>Add Item</h2>
-                <form id="itemForm">
+                <form id="itemForm" action="/add-item" method="POST">
                     <div class="input-group">
                         <input type="text" id="itemName" placeholder="Item Name" required>
                     </div>
