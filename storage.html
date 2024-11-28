@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a1eac1; /* Apple green background */
+            color: #fff; /* White text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard-container {
+            background-color: #333; /* Dark grey background for the container */
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .header-container img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .title-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .dashboard-container h1 {
+            margin-bottom: 5px;
+            font-size: 18px;
+            color: #fff;
+        }
+        .dashboard-container h2 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #ddd;
+        }
+        .content-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .form-container {
+            width: 45%;
+            text-align: left;
+        }
+        .form-container .input-group {
+            position: relative;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #000; /* Black text color for inputs */
+        }
+        .form-container .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        .form-container button {
+            width: 30%;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+        .action-buttons button {
+            width: 32%;
+            padding: 8px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .action-buttons button:hover {
+            background-color: #007bb5;
+        }
+        .action-buttons .delete {
+            background-color: #e74c3c;
+        }
+        .action-buttons .delete:hover {
+            background-color: #c0392b;
+        }
+        .action-buttons .cancel {
+            background-color: #f39c12;
+        }
+        .action-buttons .cancel:hover {
+            background-color: #e67e22;
+        }
+        .barrier {
+            width: 2px;
+            background-color: #ddd;
+            margin: 0 20px;
+        }
+        .table-container {
+            width: 45%;
+            margin-top: 1px;
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff; /* White text color for table */
+        }
+        table, th, td {
+            border: 1px solid #ddd; /* Add border to table, table headers, and table cells */
+        }
+        th, td {
+            padding: 6px;
+            text-align: left;
+        }
+        th {
+            background-color: #444; /* Dark grey background for table headers */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .button-container button {
+            padding: 6px 12px;
+            font-size: 12px;
+            color: white;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .button-container button img {
+            height: 20px;
+            margin-right: 8px;
+        }
+        .button-container button:hover {
+            background-color: #007bb5;
+        }
+        .search-container {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .search-container input {
+            width: 50%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #000; /* Black text color for inputs */
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header-container">
+            <div class="title-container">
+                <h1>Notre Dame of Tacurong College - Nursing Department's</h1>
+            </div>
+        </div>
+        <h2>INVENTORY SYSTEM</h2>
+        <div class="button-container">
+            <button onclick="window.location.href='home.html'">
+                <img src="home.png" alt="Home">
+            </button>
+        </div>
+        <div class="content-container">
+            <div class="form-container">
+                <h2>Add Item</h2>
+                <form id="itemForm">
+                    <div class="input-group">
+                        <input type="text" id="itemName" placeholder="Item Name" required>
+                    </div>
+                    <input type="number" id="quantity" placeholder="Quantity" required>
+                    <div class="button-container">
+                        <button type="submit">Add Item</button>
+                    </div>
+                </form>
+            </div>
+            <div class="barrier"></div>
+            <div class="table-container">
+                <h2>Items</h2>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search Item Name" onkeyup="searchTable()">
+                </div>
+                <table id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Table rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        let editIndex = -1;
+
+        document.getElementById('itemForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const itemName = document.getElementById('itemName').value;
+            const quantity = document.getElementById('quantity').value;
+            
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            
+            const newRow = {
+                itemName,
+                quantity
+            };
+
+            let rows = JSON.parse(localStorage.getItem('storageItems')) || [];
+            if (editIndex === -1) {
+                rows.push(newRow);
+            } else {
+                rows[editIndex] = newRow;
+                editIndex = -1;
+            }
+            localStorage.setItem('storageItems', JSON.stringify(rows));
+            loadTable();
+            document.getElementById('itemForm').reset();
+        });
+
+        function loadTable() {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            table.innerHTML = '';
+            const rows = JSON.parse(localStorage.getItem('storageItems')) || [];
+            rows.forEach((row, index) => {
+                const newRow = table.insertRow();
+                newRow.insertCell(0).textContent = row.itemName;
+                newRow.insertCell(1).textContent = row.quantity;
+                const actionCell = newRow.insertCell(2);
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'delete';
+                deleteButton.onclick = () => deleteItem(index);
+                actionCell.appendChild(deleteButton);
+            });
+        }
+
+        function deleteItem(index) {
+            let rows = JSON.parse(localStorage.getItem('storageItems')) || [];
+            rows.splice(index, 1);
+            localStorage.setItem('storageItems', JSON.stringify(rows));
+            loadTable();
+        }
+
+        function searchTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById('itemsTable');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                const td = tr[i].getElementsByTagName('td')[0];
+                if (td) {
+                    const txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = '';
+                    } else {
+                        tr[i].style.display = 'none';
+                    }
+                }
+            }
+        }
+
+        window.onload = loadTable;
+    </script>
+</body>
+</html>

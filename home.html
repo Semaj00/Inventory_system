@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="icon" type="image/png" href="is.jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a1eac1; /* Apple green background */
+            color: #fff; /* White text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard-container {
+            background-color: #333; /* Dark grey background for the container */
+            padding: 260px;
+            border-radius: 30px;
+            width: 500%;
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .menu-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-button img {
+            height: 30px;
+        }
+        .side-menu {
+            position: absolute;
+            top: 60px;
+            left: 15px;
+            display: none;
+            flex-direction: column;
+            background-color: #6d6a6a;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(230, 226, 226, 0.5);
+        }
+        .side-menu button {
+            margin: 5px 0;
+            width: 100%;
+            padding: 8px 15px;
+            font-size: 14px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .side-menu button img {
+            height: 20px;
+            margin-right: 8px;
+        }
+        .side-menu button:hover {
+            background-color: #45a049;
+        }
+        .side-menu button.home {
+            background-color: #45a049;
+        }
+        .side-menu button.home:hover {
+            background-color: #45a049;
+        }
+        .side-menu button.request-form {
+            background-color: #45a049;
+        }
+        .side-menu button.request-form:hover {
+            background-color: #45a049;
+        }
+        .side-menu button.return-form {
+            background-color: #45a049;
+        }
+        .side-menu button.return-form:hover {
+            background-color: #45a049;
+        }
+        .side-menu button.return-log {
+            background-color: #45a049;
+        }
+        .side-menu button.return-log:hover {
+            background-color: #45a049;
+        }
+        .side-menu button.storage {
+            background-color: #45a049;
+        }
+        .side-menu button.storage:hover {
+            background-color: #45a049;
+        }
+        .dashboard-container h1 {
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #fff;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .dashboard-container h2 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #ddd;
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .logout-button {
+            position: absolute;
+            top: 75px;
+            right: 15px;
+            display: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #d9534f;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .logout-button img {
+            height: 20px;
+        }
+        .logout-button:hover {
+            background-color: #c9302c;
+        }
+        .is-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .is-button img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <button class="menu-button" onclick="toggleMenu()">
+            <img src="menu.png" alt="Menu">
+        </button>
+        <div class="side-menu" id="sideMenu">
+            <button class="home" onclick="window.location.href='home.html'">
+                <img src="home.png" alt="Home">Home
+            </button>
+            <button class="request-form" onclick="window.location.href='add.html'">
+                <img src="request.png" alt="Request Form">Request Form
+            </button>
+            <button class="return-form" onclick="window.location.href='return.html'">
+                <img src="return.png" alt="Return Form">Return Form
+            </button>
+            <button class="return-log" onclick="window.location.href='returnlog.html'">
+                <img src="returnlog.png" alt="Return Log">Return Log
+            </button>
+            <button class="storage">
+                <img src="storage.png" alt="Storage">Storage
+            </button>
+        </div>
+        <button class="logout-button" id="logoutButton" onclick="window.location.href='try.html'">
+            <img src="logout.png" alt="Log Out">
+        </button>
+        <button class="is-button" onclick="toggleLogout()">
+            <img src="is.jpg" alt="IS Logo">
+        </button>
+        <h1>Notre Dame of Tacurong College - Nursing Department</h1>
+        <h2>INVENTORY SYSTEM</h2>
+    </div>
+    <script>
+        function toggleMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+            if (sideMenu.style.display === 'flex') {
+                sideMenu.style.display = 'none';
+            } else {
+                sideMenu.style.display = 'flex';
+            }
+        }
+
+        function toggleLogout() {
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton.style.display === 'block') {
+                logoutButton.style.display = 'none';
+            } else {
+                logoutButton.style.display = 'block';
+            }
+        }
+
+        function toggleMode() {
+            const body = document.body;
+            const modeButton = document.getElementById('modeButton');
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                modeButton.innerHTML = '<img src="is.jpg" alt="Toggle Mode">';
+            } else {
+                body.classList.add('dark-mode');
+                modeButton.innerHTML = '<img src="lightmode.png" alt="Toggle Mode">';
+            }
+        }
+        document.querySelector('.storage').addEventListener('click', function() {
+            window.location.href = 'storage.html';
+        });
+        function toggleLogout() {
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton.style.display === 'block') {
+                logoutButton.style.display = 'none';
+            } else {
+                logoutButton.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a1eac1; /* Black background */
+            color: #fff; /* White text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard-container {
+            background-color: #333; /* Dark grey background for the container */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .logo-container {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .dashboard-container h1 {
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #fff;
+        }
+        .dashboard-container h2 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #ddd;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        .dashboard-container button {
+            padding: 8px 15px;
+            font-size: 14px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .dashboard-container button img {
+            height: 20px;
+            margin-right: 8px;
+        }
+        .dashboard-container button:hover {
+            background-color: #45a049;
+        }
+        .dashboard-container button.home {
+            background-color: #008CBA;
+        }
+        .dashboard-container button.home:hover {
+            background-color: #007bb5;
+        }
+        .dashboard-container button.add-items {
+            background-color: #f39c12;
+        }
+        .dashboard-container button.add-items:hover {
+            background-color: #e67e22;
+        }
+        .dashboard-container button.storage {
+            background-color: #e74c3c;
+        }
+        .dashboard-container button.storage:hover {
+            background-color: #c0392b;
+        }
+        .dashboard-container button.proceed {
+            background-color: #4CAF50;
+        }
+        .dashboard-container button.proceed:hover {
+            background-color: #45a049;
+        }
+        .content-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .camera-container {
+            width: 45%;
+            text-align: left;
+        }
+        .camera-box {
+            width: 100%;
+            height: 300px;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .camera-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .camera-container button:hover {
+            background-color: #45a049;
+        }
+        .table-container {
+            width: 50%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff; /* White text color for table */
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #444; /* Dark grey background for table headers */
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="logo-container">
+            <img src="sksu.jpg" alt="SKSU Logo">
+            <img src="dame.jpg" alt="Dame Logo">
+        </div>
+        <h1>Notre Dame of Tacurong College</h1>
+        <h2>Nursing Department's INVENTORY SYSTEM</h2>
+        <div class="button-container">
+            <button class="home" onclick="window.location.href='home.html'">
+                <img src="home.png" alt="Home">
+            </button>
+         
+        </div>
+        <div class="content-container">
+            <div class="camera-container">
+                <div class="camera-box" id="cameraBox">
+                    <video id="video" width="100%" height="100%" autoplay></video>
+                </div>
+                <button onclick="captureImage()">Capture</button>
+                <canvas id="canvas" style="display:none;"></canvas>
+            </div>
+            <div class="table-container">
+                <h2>Items Details</h2>
+                <table id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>Receiving No.</th>
+                            <th>Item No.</th>
+                            <th>Item Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Table rows will be added here -->
+                    </tbody>
+                </table>
+                <button class="proceed" onclick="proceed()">Proceed</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        // Access the device camera and stream to video element
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error('Error accessing the camera: ', err);
+            });
+
+        function captureImage() {
+            // Draw the video frame to the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/png');
+            console.log('Captured image data: ', imageData);
+            alert('Image captured!');
+        }
+
+        function proceed() {
+            // Implement the logic for the proceed button
+            alert('Proceeding to the next step...');
+        }
+
+        // Example function to populate the table with item details
+        function populateTable() {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+            
+            cell1.textContent = '12345';
+            cell2.textContent = '67890';
+            cell3.textContent = 'Sample Item';
+        }
+
+        // Call the function to populate the table with example data
+        populateTable();
+    </script>
+</body>
+</html>

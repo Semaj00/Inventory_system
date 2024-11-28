@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            background-color: #a1eac1; /* Apple green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .logo-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-container .dame-logo {
+            max-width: 80%; /* Increased size */
+            max-height: 80%; /* Increased size */
+            filter: blur(8px);
+        }
+        .logo-container .cad-logo {
+            position: absolute;
+            width: 30%; /* Adjust size as needed */
+            height: auto;
+            top: 35%; /* Adjust position as needed */
+            transform: translateY(-50%);
+        }
+        .logo-container .letter {
+            position: absolute;
+            font-size: 200px; /* Adjust size as needed */
+            color: rgb(42, 84, 42);
+            font-weight: bold;
+        }
+        .logo-container .letter-r {
+            left: 45%; /* Adjust position as needed */
+            transform: translateX(-100%);
+        }
+        .logo-container .letter-n {
+            right: 45%; /* Adjust position as needed */
+            transform: translateX(100%);
+        }
+        .logo-container .text {
+            position: absolute;
+            top: 63%;
+            transform: translateY(50%);
+            text-align: center;
+            color: rgb(12, 3, 3);
+            font-weight: bold;
+        }
+        .logo-container .text h1 {
+            font-size: 36px; /* Adjust size as needed */
+            margin: 0;
+        }
+        .logo-container .text h2 {
+            font-size: 24px; /* Adjust size as needed */
+            margin: 0;
+        }
+        .top-left-logos {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .top-left-logos img {
+            height: 70px; /* Increased size */
+            margin-right: 10px;
+        }
+        .login-button {
+            position: absolute;
+            bottom: 20px;
+            right: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #157c32;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .login-button:hover {
+            background-color: #007bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left-logos">
+        <img src="sksu.jpg" alt="SKSU Logo">
+        
+    </div>
+    <div class="logo-container">
+        <img src="dame.jpg" alt="Dame Logo" class="dame-logo">
+        <img src="cad.jpg" alt="CAD Logo" class="cad-logo">
+        <div class="letter letter-r">R</div>
+        <div class="letter letter-n">N</div>
+        <div class="text">
+            <h1>INVENTORY SYSTEM</h1>
+            <h2>Notre Dame Tacurong College - Nursing Department</h2>
+        </div>
+    </div>
+    <button class="login-button" onclick="window.location.href='try.html'">LOGIN</button>
+</body>
+</html>
