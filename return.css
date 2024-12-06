@@ -14,10 +14,12 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 90%;
+    width: 95%; /* Increase horizontal width */
     max-width: 1200px;
     text-align: center;
     position: relative;
+    height: auto; /* Adjust height to fit content */
+    max-height: 100vh; /* Limit the maximum height */
 }
 .header-container {
     display: flex;
@@ -85,7 +87,8 @@ body {
 }
 .action-buttons {
     display: flex;
-    justify-content: center; /* Center the cancel button */
+    justify-content: flex-start; /* Align buttons to the start */
+    gap: 20px; /* Add space between buttons */
     margin-top: 8px;
 }
 .action-buttons button {
@@ -141,11 +144,13 @@ th {
 .button-container {
     display: flex;
     justify-content: center;
+    align-items: center; /* Center align items vertically */
     margin-top: 10px;
+    margin-left: -50px;
 }
 .button-container button {
-    padding: 6px 30px;
-    font-size: 12px;
+    padding: 4px 15px;
+    font-size: 15px;
     color: white;
     background-color: #45a049;
     border: none;

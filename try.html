@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel="icon" type="image/png" href="is.jpg">
+    <link rel="icon" type="image/png" href="images/is.jpg">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -75,14 +75,17 @@
         .create-account-container span {
             color: #bbb;
         }
-        .show-password-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 10px;
+        .password-container {
+            position: relative;
         }
-        .show-password-container label {
-            color: #bbb;
+        .password-container .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 20px; /* Set the width to make the icon smaller */
+            height: 20px; /* Set the height to make the icon smaller */
         }
         .exit-button {
             position: absolute;
@@ -104,10 +107,9 @@
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Username" required>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <div class="show-password-container">
-                <label for="showPassword">Show Password</label>
-                <input type="checkbox" id="showPassword">
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <img src="images/eye.png" alt="Show Password" id="showPassword" class="eye-icon">
             </div>
             <button type="submit">Login</button>
             <div class="create-account-container">
@@ -115,9 +117,10 @@
                 <button type="button" class="create-account" id="createAccountBtn">Create Account</button>
             </div>
         </form>
+        <div id="error-message" style="display: none; color: red; margin-top: 10px;"></div>
     </div>
     <button class="exit-button" onclick="window.location.href='main.html'">
-        <img src="exit.png" alt="Exit">
+        <img src="images/exit.png" alt="Exit">
     </button>
     <script>
         document.getElementById('createAccountBtn').addEventListener('click', function() {
@@ -147,7 +150,8 @@
                     window.location.href = 'home.html';
                 } else {
                     const errorData = await response.json();
-                    alert(`An error occurred while saving the request: ${errorData.message}`);
+                    document.getElementById('error-message').textContent = `An error occurred while logging in: ${errorData.message}`;
+                    document.getElementById('error-message').style.display = 'block';
                 }
             } catch (err) {
                 console.error('Error while submitting form:', err);
@@ -155,12 +159,14 @@
             }
         });
 
-        document.getElementById('showPassword').addEventListener('change', function() {
+        document.getElementById('showPassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
-            if (this.checked) {
+            if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
+                this.src = 'images/closedeye.png'; // Change to closed eye icon
             } else {
                 passwordInput.type = 'password';
+                this.src = 'images/eye.png'; // Change back to open eye icon
             }
         });
 

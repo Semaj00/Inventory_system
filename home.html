@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="icon" type="image/png" href="is.jpg">
+    <link rel="icon" type="image/png" href="images/is.jpg">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #a1eac1; /* Apple green background */
-            color: #fff; /* White text color */
+            background-color: #a1eac1; 
+            color: #fff; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -18,7 +18,7 @@
             margin: 0;
         }
         .dashboard-container {
-            background-color: #333; /* Dark grey background for the container */
+            background-color: #333; 
             padding: 260px;
             border-radius: 30px;
             width: 500%;
@@ -158,38 +158,149 @@
             width: 50px;
             border-radius: 50%;
         }
+        .chatbot-button {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #4CAF50; 
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .chatbot-button:hover {
+            transform: scale(1.1); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+        }
+        .chatbot-button img {
+            height: 30px; 
+            width: 30px; 
+            border-radius: 50%;
+        }
+        .chatbot-message {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            right: 70px; 
+            background-color: #fff;
+            color: #000;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 200px; 
+        }
+        .chatbot-message input {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .chatbot-message textarea {
+            width: calc(100% - 40px); 
+            padding: 10px; 
+            margin-top: 10px; 
+            border: 1px solid #ccc;
+            border-radius: 8px; 
+            resize: none; 
+            font-size: 14px; 
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); 
+            transition: border-color 0.3s, box-shadow 0.3s; 
+        }
+        .chatbot-message textarea:focus {
+            border-color: #4CAF50; 
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); 
+        }
+        .send-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px; 
+            right: 30px; 
+        }
+        .send-button img {
+            height: 15px;
+            width: 15px;
+        }
+        .chatbot-message p.reply {
+            margin-top: 10px;
+            background-color: #f1f1f1;
+            color: #000;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .chatbot-message p.reply img {
+            height: 20px; 
+            width: 20px; 
+            margin-right: 10px; 
+        }
+        .voice-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px; 
+            left: 10px; 
+        }
+        .voice-button img {
+            height: 15px;
+            width: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <button class="menu-button" onclick="toggleMenu()">
-            <img src="menu.png" alt="Menu">
+            <img src="images/menu.png" alt="Menu">
         </button>
         <div class="side-menu" id="sideMenu">
             <button class="home" onclick="window.location.href='home.html'">
-                <img src="home.png" alt="Home">Home
+                <img src="images/home.png" alt="Home">Home
             </button>
             <button class="request-form" onclick="window.location.href='add.html'">
-                <img src="request.png" alt="Request Form">Request Form
+                <img src="images/request.png" alt="Request Form">Request Form
             </button>
             <button class="return-form" onclick="window.location.href='return.html'">
-                <img src="return.png" alt="Return Form">Return Form
+                <img src="images/return.png" alt="Return Form">Return Form
             </button>
             <button class="return-log" onclick="window.location.href='returnlog.html'">
-                <img src="returnlog.png" alt="Return Log">Return Log
+                <img src="images/returnlog.png" alt="Return Log">Return Log
             </button>
             <button class="storage">
-                <img src="storage.png" alt="Storage">Storage
+                <img src="images/storage.png" alt="Storage">Storage
             </button>
         </div>
         <button class="logout-button" id="logoutButton" onclick="window.location.href='try.html'">
-            <img src="logout.png" alt="Log Out">
+            <img src="images/logout.png" alt="Log Out">
         </button>
         <button class="is-button" onclick="toggleLogout()">
-            <img src="is.jpg" alt="IS Logo">
+            <img src="images/is.jpg" alt="IS Logo">
         </button>
-        <h1>Notre Dame of Tacurong College - Nursing Department</h1>
+        <h1>SULTAN KUDARAT STATE UNIVERSITY - CHS DEPARTMENT</h1>
         <h2>INVENTORY SYSTEM</h2>
+    </div>
+    <button class="chatbot-button" onclick="toggleChatbot()">
+        <img src="images/chatbot.png" alt="Chatbot">
+    </button>
+    <div class="chatbot-message" id="chatbotMessage">
+        <p>Hello! How can I assist you today?</p>
+        <div style="position: relative;">
+            <textarea rows="4" placeholder="Type your message..."></textarea>
+            <button class="send-button" onclick="sendMessage()" style="position: absolute; bottom: 10px; right: 10px;">
+                <img src="images/send.png" alt="Send">
+            </button>
+            <button class="voice-button" onclick="startVoiceRecognition()" style="position: absolute; bottom: 10px; left: 10px;"> 
+                <img src="images/voice.png" alt="Voice">
+            </button>
+        </div>
+        <p class="reply" id="chatbotReply">
+            <img src="images/chatbot.png" alt="AI Logo"> 
+        </p>
     </div>
     <script>
         function toggleMenu() {
@@ -210,27 +321,80 @@
             }
         }
 
-        function toggleMode() {
-            const body = document.body;
-            const modeButton = document.getElementById('modeButton');
-            if (body.classList.contains('dark-mode')) {
-                body.classList.remove('dark-mode');
-                modeButton.innerHTML = '<img src="is.jpg" alt="Toggle Mode">';
-            } else {
-                body.classList.add('dark-mode');
-                modeButton.innerHTML = '<img src="lightmode.png" alt="Toggle Mode">';
-            }
-        }
         document.querySelector('.storage').addEventListener('click', function() {
             window.location.href = 'storage.html';
         });
-        function toggleLogout() {
-            const logoutButton = document.getElementById('logoutButton');
-            if (logoutButton.style.display === 'block') {
-                logoutButton.style.display = 'none';
+
+        function toggleChatbot() {
+            const chatbotMessage = document.getElementById('chatbotMessage');
+            if (chatbotMessage.style.display === 'block') {
+                chatbotMessage.style.display = 'none';
             } else {
-                logoutButton.style.display = 'block';
+                chatbotMessage.style.display = 'block';
             }
+        }
+
+        async function sendMessage() {
+            const textarea = document.querySelector('.chatbot-message textarea');
+            const message = textarea.value;
+            console.log('Message sent:', message);
+
+            try {
+                const response = await fetch('/chatbot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response from server:', errorText);
+                    document.getElementById('chatbotReply').textContent = 'Error: ' + errorText;
+                    return;
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('chatbotReply').textContent = data.reply;
+                } else {
+                    document.getElementById('chatbotReply').textContent = 'Error: ' + data.message + (data.details ? ' - ' + data.details : '');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                document.getElementById('chatbotReply').textContent = 'Error: Could not send message. ' + error.message;
+            }
+
+            textarea.value = ''; 
+        }
+
+        document.querySelector('.chatbot-message textarea').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function startVoiceRecognition() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                const textarea = document.querySelector('.chatbot-message textarea');
+                textarea.value = transcript;
+                textarea.focus(); 
+                
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            };
         }
     </script>
 </body>

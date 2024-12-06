@@ -40,9 +40,10 @@
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #333;
             border-radius: 4px;
-            color: #000; /* Black text color for inputs */
+            color: white; /* Black text color for inputs */
+            background-color: #333; /* Set background color to #333 */
         }
         .create-account-container button {
             width: 100%;
@@ -93,6 +94,18 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
+        .password-container {
+            position: relative;
+        }
+        .password-container .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 20px; /* Set the width to make the icon smaller */
+            height: 20px; /* Set the height to make the icon smaller */
+        }
     </style>
 </head>
 <body>
@@ -104,31 +117,44 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="Email" required>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <img src="images/eye.png" alt="Show Password" id="showPassword" class="eye-icon">
+            </div>
             <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-            <div class="show-password-container">
-                <label for="showPassword">Show Password</label>
-                <input type="checkbox" id="showPassword">
+            <div class="password-container">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                <img src="images/eye.png" alt="Show Password" id="showConfirmPassword" class="eye-icon">
             </div>
             <button type="submit">Create Account</button>
+            <p><a href="try.html" style="color: #4CAF50; text-decoration: none;">Already have an account?</a></p>
         </form>
     </div>
     
     <div class="popup-message" id="popupMessage">Account Successfully Created</div>
     <button class="exit-button" onclick="window.location.href='main.html'">
-        <img src="exit.png" alt="Exit">
+        <img src="images/exit.png" alt="Exit">
     </button>
     <script>
-        document.getElementById('showPassword').addEventListener('change', function() {
+        document.getElementById('showPassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('confirmPassword');
-            if (this.checked) {
+            if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                confirmPasswordInput.type = 'text';
+                this.src = 'images/closedeye.png'; // Change to closed eye icon
             } else {
                 passwordInput.type = 'password';
+                this.src = 'images/eye.png'; // Change back to open eye icon
+            }
+        });
+
+        document.getElementById('showConfirmPassword').addEventListener('click', function() {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                this.src = 'images/closedeye.png'; // Change to closed eye icon
+            } else {
                 confirmPasswordInput.type = 'password';
+                this.src = 'images/eye.png'; // Change back to open eye icon
             }
         });
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capture</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" type="image/png" href="is.jpg">
+    <link rel="icon" type="image/png" href="images/is.jpg">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -156,91 +156,124 @@
         th {
             background-color: #444; /* Dark grey background for table headers */
         }
+        .results-container {
+            width: 45%;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 10px;
+            margin-left: 10px;
+        }
+        .results-container h3 {
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            color: #ddd;
+        }
+        .results-container p {
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <div class="logo-container">
-            <img src="sksu.jpg" alt="SKSU Logo">
-            <img src="dame.jpg" alt="Dame Logo">
+            <img src="images/sksu.jpg" alt="SKSU Logo">
         </div>
-        <h1>Notre Dame of Tacurong College</h1>
-        <h2>Nursing Department's INVENTORY SYSTEM</h2>
+        <h1>SULTAN KUDARAT STATE UNIVERSITY - CHS DEPARTMENT</h1>
+        <h2>INVENTORY SYSTEM</h2>
         <div class="button-container">
             <button class="home" onclick="window.location.href='home.html'">
-                <img src="home.png" alt="Home">
+                <img src="images/home.png" alt="Home">
             </button>
-         
         </div>
         <div class="content-container">
             <div class="camera-container">
                 <div class="camera-box" id="cameraBox">
                     <video id="video" width="100%" height="100%" autoplay></video>
                 </div>
-                <button onclick="captureImage()">Capture</button>
                 <canvas id="canvas" style="display:none;"></canvas>
+                <p id="result"></p> <!-- Add this element to display the result -->
+                <button id="captureButton">Identify Object</button> <!-- New button added here -->
             </div>
-            <div class="table-container">
-                <h2>Items Details</h2>
-                <table id="itemsTable">
-                    <thead>
-                        <tr>
-                            <th>Receiving No.</th>
-                            <th>Item No.</th>
-                            <th>Item Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Table rows will be added here -->
-                    </tbody>
-                </table>
-                <button class="proceed" onclick="proceed()">Proceed</button>
-            </div>
+            <div id="results" class="results-container">
+                <h3>Detection Results</h3> <!-- Title added here -->
+            </div> <!-- Add this element to display the results -->
         </div>
     </div>
     <script>
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const context = canvas.getContext('2d');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const result = document.getElementById('result');
+    const captureButton = document.getElementById('captureButton');
+    const resultsDiv = document.getElementById('results');
 
-        // Access the device camera and stream to video element
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(err => {
-                console.error('Error accessing the camera: ', err);
+    // Access the device camera and stream to video element
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+                // Set canvas dimensions to match video dimensions
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+            };
+        })
+        .catch(err => {
+            console.error('Error accessing the camera: ', err);
+            if (err.name === 'NotReadableError') {
+                alert('Error: Camera is already in use.');
+            } else {
+                alert('Error accessing the camera.');
+            }
+        });
+
+    captureButton.addEventListener('click', async () => {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const base64Image = canvas.toDataURL('image/jpeg').split(',')[1];
+
+        try {
+            const response = await fetch('/detect-object', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: base64Image }),
             });
 
-        function captureImage() {
-            // Draw the video frame to the canvas
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL('image/png');
-            console.log('Captured image data: ', imageData);
-            alert('Image captured!');
-        }
+            const data = await response.json();
 
-        function proceed() {
-            // Implement the logic for the proceed button
-            alert('Proceeding to the next step...');
+            if (data.success) {
+                displayResults(data.data);
+            } else {
+                resultsDiv.textContent = `Error: ${data.message}`;
+            }
+        } catch (error) {
+            console.error('Error making API call:', error);
+            resultsDiv.textContent = 'Error processing the image. Check console for details.';
         }
+    });
 
-        // Example function to populate the table with item details
-        function populateTable() {
-            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
-            
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-            const cell3 = newRow.insertCell(2);
-            
-            cell1.textContent = '12345';
-            cell2.textContent = '67890';
-            cell3.textContent = 'Sample Item';
+    function displayResults(annotations) {
+        resultsDiv.innerHTML = '';
+        if (annotations && annotations.length > 0) {
+            annotations.forEach(label => {
+                const p = document.createElement('p');
+                p.textContent = `${label.description} (${(label.score * 100).toFixed(2)}%)`;
+                resultsDiv.appendChild(p);
+            });
+        } else {
+            resultsDiv.textContent = 'No objects detected.';
         }
-
-        // Call the function to populate the table with example data
-        populateTable();
-    </script>
+    }
+</script>
 </body>
 </html>

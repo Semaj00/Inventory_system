@@ -1,0 +1,3 @@
+0 Surgical Gloves
+1 Medical Tape
+2 Syringe

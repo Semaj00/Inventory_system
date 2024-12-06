@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" type="image/png" href="is.jpg">
+    <link rel="icon" type="image/png" href="images/is.jpg">
 
     <style>
         body {
@@ -94,6 +94,9 @@
         }
         .form-container button:hover {
             background-color: #45a049;
+        }
+        .form-container .button-container button {
+            margin-right: 10px; /* Add margin to create gap */
         }
         .action-buttons {
             display: flex;
@@ -190,14 +193,15 @@
 <body>
     <div class="dashboard-container">
         <div class="header-container">
+            <img src="images/sksu.jpg" alt="Logo" style="position: absolute; top: 10px; left: 10px; height: 40px;">
             <div class="title-container">
-                <h1>Notre Dame of Tacurong College - Nursing Department's</h1>
+                <h1>SULTAN KUDARAT STATE UNIVERSITY - CHS DEPARTMENT</h1>
             </div>
         </div>
         <h2>INVENTORY SYSTEM</h2>
         <div class="button-container">
             <button onclick="window.location.href='home.html'">
-                <img src="home.png" alt="Home">
+                <img src="images/home.png" alt="Home">
             </button>
         </div>
         <div class="content-container">
@@ -205,11 +209,12 @@
                 <h2>Add Item</h2>
                 <form id="itemForm" action="/add-item" method="POST">
                     <div class="input-group">
-                        <input type="text" id="itemName" placeholder="Item Name" required>
+                        <input type="text" id="itemName" name="itemName" placeholder="Item Name" required>
                     </div>
-                    <input type="number" id="quantity" placeholder="Quantity" required>
+                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" required>
                     <div class="button-container">
-                        <button type="submit">Add Item</button>
+                        <button type="submit">Save</button>
+                        <button type="button" onclick="cancelEdit()">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -235,55 +240,120 @@
         </div>
     </div>
     <script>
-        let editIndex = -1;
+        let editItemId = null;
 
-        document.getElementById('itemForm').addEventListener('submit', function(event) {
+        document.getElementById('itemForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             
             const itemName = document.getElementById('itemName').value;
             const quantity = document.getElementById('quantity').value;
             
-            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
-            
-            const newRow = {
-                itemName,
-                quantity
-            };
+            const url = editItemId ? `/update-item/${editItemId}` : '/add-item';
+            const method = editItemId ? 'PUT' : 'POST';
 
-            let rows = JSON.parse(localStorage.getItem('storageItems')) || [];
-            if (editIndex === -1) {
-                rows.push(newRow);
-            } else {
-                rows[editIndex] = newRow;
-                editIndex = -1;
+            try {
+                const response = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ itemName, quantity })
+                });
+
+                if (response.ok) {
+                    const newItem = await response.json();
+                    if (editItemId) {
+                        updateTableRow(newItem.data);
+                    } else {
+                        addItemToTable(newItem.data);
+                    }
+                    saveItemsToLocalStorage();
+                    document.getElementById('itemForm').reset();
+                    editItemId = null;
+                } else {
+                    const errorData = await response.json();
+                    console.error('Failed to save item:', errorData.message);
+                }
+            } catch (error) {
+                console.error('Error saving item:', error);
             }
-            localStorage.setItem('storageItems', JSON.stringify(rows));
-            loadTable();
-            document.getElementById('itemForm').reset();
         });
 
-        function loadTable() {
-            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
-            table.innerHTML = '';
-            const rows = JSON.parse(localStorage.getItem('storageItems')) || [];
-            rows.forEach((row, index) => {
-                const newRow = table.insertRow();
-                newRow.insertCell(0).textContent = row.itemName;
-                newRow.insertCell(1).textContent = row.quantity;
-                const actionCell = newRow.insertCell(2);
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.className = 'delete';
-                deleteButton.onclick = () => deleteItem(index);
-                actionCell.appendChild(deleteButton);
+        async function deleteItem(id) {
+            const response = await fetch(`/delete-item/${id}`, {
+                method: 'DELETE'
             });
+
+            if (response.ok) {
+                const row = document.querySelector(`tr[data-id='${id}']`);
+                if (row) {
+                    row.remove();
+                }
+                removeItemFromLocalStorage(id);
+            } else {
+                console.error('Failed to delete item');
+            }
         }
 
-        function deleteItem(index) {
-            let rows = JSON.parse(localStorage.getItem('storageItems')) || [];
-            rows.splice(index, 1);
-            localStorage.setItem('storageItems', JSON.stringify(rows));
-            loadTable();
+        function addItemToTable(item) {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.dataset.id = item._id;
+            newRow.insertCell(0).textContent = item.itemName;
+            newRow.insertCell(1).textContent = item.quantity;
+            const actionCell = newRow.insertCell(2);
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete';
+            deleteButton.onclick = async (event) => {
+                event.stopPropagation();
+                await deleteItem(item._id);
+            };
+            actionCell.appendChild(deleteButton);
+
+            newRow.onclick = () => editItem(item);
+        }
+
+        function removeItemFromLocalStorage(id) {
+            const items = JSON.parse(localStorage.getItem('items')) || [];
+            const updatedItems = items.filter(item => item._id !== id);
+            localStorage.setItem('items', JSON.stringify(updatedItems));
+        }
+
+        async function loadTable() {
+            try {
+                const response = await fetch('/items');
+                const data = await response.json();
+                if (response.ok && Array.isArray(data)) {
+                    const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+                    table.innerHTML = '';
+                    data.forEach(item => addItemToTable(item));
+                    saveItemsToLocalStorage();
+                } else {
+                    console.error('Unexpected data format:', data);
+                }
+            } catch (error) {
+                console.error('Error loading table:', error);
+            }
+        }
+
+        function editItem(item) {
+            document.getElementById('itemName').value = item.itemName;
+            document.getElementById('quantity').value = item.quantity;
+            editItemId = item._id;
+        }
+
+        function updateTableRow(item) {
+            const row = document.querySelector(`tr[data-id='${item._id}']`);
+            if (row) {
+                row.cells[0].textContent = item.itemName;
+                row.cells[1].textContent = item.quantity;
+            }
+        }
+
+        function cancelEdit() {
+            document.getElementById('itemForm').reset();
+            editItemId = null;
         }
 
         function searchTable() {
@@ -305,7 +375,27 @@
             }
         }
 
-        window.onload = loadTable;
+        function saveItemsToLocalStorage() {
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            const rows = Array.from(table.rows).map(row => ({
+                _id: row.dataset.id,
+                itemName: row.cells[0].textContent,
+                quantity: row.cells[1].textContent
+            }));
+            localStorage.setItem('items', JSON.stringify(rows));
+        }
+
+        function loadItemsFromLocalStorage() {
+            const items = JSON.parse(localStorage.getItem('items')) || [];
+            const table = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+            table.innerHTML = '';
+            items.forEach(item => addItemToTable(item));
+        }
+
+        window.onload = () => {
+            loadItemsFromLocalStorage();
+            loadTable();
+        };
     </script>
 </body>
-</html>
+</html> 
