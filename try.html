@@ -8,8 +8,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #a1eac1; /* Light green background */
-            color: #fff; /* White text color */
+            background-color: #a1eac1; 
+            color: #fff; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,7 +17,7 @@
             margin: 0;
         }
         .login-container {
-            background-color: #444; /* Dark grey background for the container */
+            background-color: #444; 
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -84,8 +84,8 @@
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            width: 20px; /* Set the width to make the icon smaller */
-            height: 20px; /* Set the height to make the icon smaller */
+            width: 20px; 
+            height: 20px; 
         }
         .exit-button {
             position: absolute;
@@ -103,7 +103,7 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm" action="http://localhost:3019/login" method="POST">
+        <form id="loginForm" action="/login" method="POST">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Username" required>
             <label for="password">Password:</label>
@@ -128,16 +128,16 @@
         });
 
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent the form from reloading the page
+            event.preventDefault(); 
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Define requestNo if needed, or remove it from the body if it's not required
-            const requestNo = ''; // or obtain it from somewhere else in your code
+            
+            const requestNo = ''; 
 
             try {
-                const response = await fetch('http://localhost:3019/login', {
+                const response = await fetch('/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -146,7 +146,7 @@
                 });
 
                 if (response.ok) {
-                    // Redirect after successful login
+                    
                     window.location.href = 'home.html';
                 } else {
                     const errorData = await response.json();
@@ -163,14 +163,14 @@
             const passwordInput = document.getElementById('password');
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                this.src = 'images/closedeye.png'; // Change to closed eye icon
+                this.src = 'images/closedeye.png';
             } else {
                 passwordInput.type = 'password';
-                this.src = 'images/eye.png'; // Change back to open eye icon
+                this.src = 'images/eye.png'; 
             }
         });
 
-        // Function to populate form with existing data
+        
         function populateForm(data) {
             document.getElementById('username').value = data.username;
             document.getElementById('password').value = data.password;

@@ -218,7 +218,7 @@
 
     async function loadTable() {
         try {
-            const response = await fetch('http://localhost:3019/requests');
+            const response = await fetch('/requests');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
