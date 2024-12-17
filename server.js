@@ -88,7 +88,11 @@ const requestSchema = new mongoose.Schema({
     dateNeeded: String, 
     borrowerName: String,
     idNumber: String,
-    courseYearSection: String 
+    courseYearSection: String,
+    borrowed: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const Request = mongoose.model('Request', requestSchema);
@@ -208,7 +212,7 @@ app.post('/add-request', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid date format' });
         }
 
-        const newRequest = new Request({ requestNo, itemName, quantity, dateNeeded: formattedDateNeeded, borrowerName, idNumber, courseYearSection });
+        const newRequest = new Request({ requestNo, itemName, quantity, dateNeeded: formattedDateNeeded, borrowerName, idNumber, courseYearSection, borrowed: true });
         await newRequest.save();
         console.log('Request data saved to MongoDB:', newRequest);
         
@@ -228,17 +232,15 @@ app.put('/update-request', async (req, res) => {
             return res.status(400).json({ success: false, message: 'All fields are required' });
         }
 
-        
         const formattedDateNeeded = formatDate(dateNeeded);
 
         if (formattedDateNeeded === 'Invalid Date') {
             return res.status(400).json({ success: false, message: 'Invalid date format' });
         }
 
-        
         const updatedRequest = await Request.findOneAndUpdate(
             { requestNo },
-            { itemName, quantity, dateNeeded: formattedDateNeeded, borrowerName, idNumber, courseYearSection },
+            { itemName, quantity, dateNeeded: formattedDateNeeded, borrowerName, idNumber, courseYearSection, borrowed: true },
             { new: true }
         );
 

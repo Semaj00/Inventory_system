@@ -6,7 +6,7 @@
     <title>Return Log</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="returnlog.css"> <!-- Link to external CSS file -->
-    <link rel="icon" type="image/png" href="imges/is.jpg">
+    <link rel="icon" type="image/png" href="images/is.jpg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); /* Import aesthetic font */
 
@@ -39,7 +39,7 @@
                 <button onclick="loadTable()">
                     <img src="images/refresh.png" alt="Refresh">
                 </button>
-                <input type="text" id="searchInput" placeholder="Search Request No." onkeyup="searchTable()">
+                <input type="text" id="searchInput" placeholder="Search ID Number" onkeyup="searchTable()">
             </div>
             <table id="itemsTable">
                 <thead>
@@ -80,7 +80,7 @@
             const tr = table.getElementsByTagName('tr');
 
             for (let i = 1; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName('td')[0];
+                const td = tr[i].getElementsByTagName('td')[5]; // Change index to 5 for ID Number
                 if (td) {
                     const txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {

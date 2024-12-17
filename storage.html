@@ -380,7 +380,7 @@
             const rows = Array.from(table.rows).map(row => ({
                 _id: row.dataset.id,
                 itemName: row.cells[0].textContent,
-                quantity: row.cells[1].textContent
+                quantity: row.cells[1].textContent,
             }));
             localStorage.setItem('items', JSON.stringify(rows));
         }
@@ -398,4 +398,4 @@
         };
     </script>
 </body>
-</html> 
+</html>  
